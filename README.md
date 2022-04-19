@@ -20,66 +20,17 @@ The reason for removing the filling operation is that it is not possible when yo
 
 Do all situations have answers? No, it's not. Use the below formula to test the possibility quickly:
 
-$$
-\begin{array}{l}
-\begin{array}{ l }
-(capacity\ A-amount\ A)\ \pm \ (capacity\ B-amount\ B)\ =\ \begin{cases}
-x\\
-y
-\end{cases}
-\end{array}\\
-we\ probably\ have\ a\ solution\ if\ x\ or\ y\ is\ equal\ to\ the\ goal\ amount\\
-but\ don't\ trust,\ the\ game\ is\ not\ always\ so\ simple
-\end{array}
-$$
+![Possibility formula:](screenshots/possibility-formula.png)
 
 <span style="color:orange"><i>Read the states like this: (amount of jug A/capacity of jug A, amount of jug B/capacity of jug B) [-> goal amount]</i></span>
 
-$$
-\begin{array}{l}
-situation\ no.\ 1:\ ( 4/5,\ 3/5) \ \rightarrow \ 3\\
-\\
-(5-4)\ \pm \ (5-3)\ =\ \begin{cases}
-+3\\
--1
-\end{cases}\\
-the\ x\ value\ touched\ our\ goal\\
-\\
-solution:\ (4/5,\ 3/5)\ \rightarrow \ (0/5,\ 3/5)\ \rightarrow \ done\\
-\\
-\\
-situation\ no.\ 2:\ ( 5/7,\ 2/8) \ \rightarrow \ 0\\
-\\
-( 7-5) \ \pm \ ( 8-2) \ =\ \begin{cases}
-+8\\
--4
-\end{cases}\\
-this\ time\ none\ of\ the\ x\ and\ y\ values\ ​​reached\ our\ desired\ level,\ but\ we\ know\ that\\
-the\ containers\ must\ be\ empty\ now\ and\ the\ above\ formula\ includes\ exceptions\\
-\\
-solution:\ ( 5/7,\ 2/8) \ \rightarrow \ ( 0/7,\ 2/8) \ \rightarrow \ ( 0/7,\ 0/8) \ \rightarrow \ done\\
-\\
-\\
-situation\ no.\ 3:\ ( 3/7,\ 1/4) \ \rightarrow \ 7\\
-\\
-(7-3)\ \pm \ (4-1)\ =\ \begin{cases}
-+7\\
-+1
-\end{cases}\\
-the\ formula\ tells\ us\ it\ is\ possible,\ but\ the\ amounts\ and\ rules\ ​​do\ not\ think\ so\\
-\\
-\\
-situation\ no.\ 4:\ ( 11/14,\ 4/6) \ \rightarrow \ 5\\
-\\
-(14-11)\ \pm \ (6-4)\ =\ \begin{cases}
-+5\\
-+1
-\end{cases}\\
-what\ does\ the\ formula\ tell\ us?\ yeah,\ it's\ possible\ again\\
-\\
-do\ you\ solve\ this?
-\end{array}
-$$
+![Situation no. 1:](screenshots/situation-no1.png)\
+\
+![Situation no. 2:](screenshots/situation-no2.png)\
+\
+![Situation no. 3:](screenshots/situation-no3.png)\
+\
+![Situation no. 4:](screenshots/situation-no4.png)
 
 ### Screenshots
 

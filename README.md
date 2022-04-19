@@ -81,6 +81,13 @@ do\ you\ solve\ this?
 \end{array}
 $$
 
+### Screenshots
+
+![Solved puzzle with default values.](screenshots/solved-puzzle.png)
+![Another solved puzzle with huge jugs.](screenshots/solved-puzzle-with-huge-jugs.png)
+![Manually solved puzzle.](screenshots/manually-solved-puzzle.png)
+![And a unsolved puzzle...](screenshots/unsolved-puzzle.png)
+
 ### Usage
 
 Install the dependencies:
@@ -95,11 +102,11 @@ Run the core logic directly from the command line:
 python core.py
 ```
 
-<!-- Or even better, use the graphical interface:
+Or even better, use the graphical interface:
 
 ```bash
 python app.py
-``` -->
+```
 
 ### License
 

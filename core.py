@@ -251,10 +251,10 @@ class WaterJugPuzzle:
             self.apply(1)
         elif jug_a_amount + jug_b_amount == self.goal and jug_a_amount + jug_b_amount <= jug_a_capacity:
             self.apply(6)
-            self.apply(2)
+            # self.apply(2)
         elif jug_a_amount + jug_b_amount == self.goal and jug_a_amount + jug_b_amount <= jug_b_capacity:
             self.apply(7)
-            self.apply(1)
+            # self.apply(1)
         elif jug_a_capacity == self.goal and jug_a_amount + jug_b_amount >= self.goal:
             self.apply(6)
             self.apply(2)

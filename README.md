@@ -2,6 +2,10 @@
 
 Water jug is a classic and also interesting puzzle to solve. You are given some number of jugs with a capacity and a initial state of water in each jug. Now you should do some operations to make the water in one jug to be equal to the goal amount.
 
+This puzzle in computer science is usually solved in two ways; the simplest way is to act step by step and the other is to use trees to show all possible situations ahead. In Die Hard 3, you saw that the challenge was done by emptying and filling the containers, but in this project I broke the classic rules and eliminated the fill operation.
+
+[Here](https://docs.google.com/presentation/d/1iDb--i5aA3QGvOIK6YzWG_KBNCoqV0NrjWOURZ6v59Y/edit?usp=sharing) is a slide presentation in Farsi.
+
 ![You can not drink under a hockey mask...](https://media.giphy.com/media/3oKIPaVO4VEyVnjsuk/giphy.gif)
 
 ### Rules
@@ -11,10 +15,8 @@ There is no any formal strategy and you have to make one for yourself... Just ki
 Let's solve a few examples to understand it better, but before that we have to respect some limitations. The operations you can perform are:
 
 - Empty a jug
-- <s>Fully fill a jug</s>
+- <s>Fill a jug</s>
 - Pour water from one jug to another until one of the jugs is ethier full or empty
-
-The reason for removing the filling operation is that it is not possible when you and a mad stranger are fighting over a jug in the desert! It may sound silly, but please accept.
 
 ### Examples
 
@@ -22,7 +24,7 @@ Do all situations have answers? No, it's not. Use the below formula to test the 
 
 ![Possibility formula:](screenshots/possibility-formula.png)
 
-<span style="color:orange"><i>Read the states like this: (amount of jug A/capacity of jug A, amount of jug B/capacity of jug B) [-> goal amount]</i></span>
+<i>Read the states like this: (amount of jug A/capacity of jug A, amount of jug B/capacity of jug B) [-> goal amount]</i>
 
 ![Situation no. 1:](screenshots/situation-no1.png)\
 \

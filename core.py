@@ -210,11 +210,11 @@ class WaterJugPuzzle:
             jug_a_amount = 0
         elif rule == 2:  # Empty jug B
             jug_b_amount = 0
-        # elif rule == 3:  # Full both jugs
+        # elif rule == 3:  # Fill both jugs
         #     jug_a_amount, jug_b_amount = jug_a_capacity, jug_b_capacity
-        # elif rule == 4:  # Full jug A
+        # elif rule == 4:  # Fill jug A
         #     jug_a_amount = jug_a_capacity
-        # elif rule == 5:  # Full jug B
+        # elif rule == 5:  # Fill jug B
         #     jug_b_amount = jug_b_capacity
         elif rule == 6:  # Pour jug B into jug A
             addition = jug_a_amount + jug_b_amount

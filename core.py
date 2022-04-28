@@ -277,18 +277,24 @@ class WaterJugPuzzle:
 
 if __name__ == '__main__':
     import re
+    import sys
 
     jugs = input('Enter the capacity and initial state of the jugs (e.g. 3/4, 7/8): ')
-    goal = input('What is the goal amount of water in the jugs? ')
-
     values = list(int(x) for x in re.findall(r'\d+', jugs))
     if len(values) != 4:
-        raise ValueError('Invalid input! Format must be capacity A/initial amount A, capacity B/initial amount B.')
+        print('Invalid input! Format must be capacity A/initial amount A, capacity B/initial amount B.')
+        sys.exit(1)
 
+    goal = input('What is the goal amount of water in the jugs? ')
     if not goal.isnumeric():
-        raise ValueError('Invalid input! Goal must be a number.')
+        print('Invalid input! Goal must be greater or equal to zero.')
+        sys.exit(1)
 
-    water_juz_puzzle = WaterJugPuzzle(f'{values[0]}/{values[1]}', f'{values[2]}/{values[3]}', int(goal))
-    print(f'\n{water_juz_puzzle}')
-    print(f'Is the puzzle solved? {water_juz_puzzle.solve()}')
-    print(f'Solution: {list(water_juz_puzzle.states())}')
+    try:
+        water_juz_puzzle = WaterJugPuzzle(f'{values[0]}/{values[1]}', f'{values[2]}/{values[3]}', int(goal))
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
+
+    print(f'\nIs the puzzle solved? {"Yes" if water_juz_puzzle.solve() else "No"}')
+    print(f'Solution: {" -> ".join(list(water_juz_puzzle.states()))}')

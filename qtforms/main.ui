@@ -407,12 +407,27 @@
             </item>
             <item>
              <property name="text">
-              <string>Pour jug B to A</string>
+              <string>Fill both jugs</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fill jug A</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fill jug B</string>
              </property>
             </item>
             <item>
              <property name="text">
               <string>Pour jug A to B</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Pour jug B to A</string>
              </property>
             </item>
            </widget>

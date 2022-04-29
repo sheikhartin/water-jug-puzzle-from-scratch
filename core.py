@@ -165,20 +165,20 @@ class WaterJugPuzzle:
         return (self.jug_a == other.jug_a and self.jug_b == other.jug_b and
                 self.goal == other.goal)
 
-    def _string_to_list(self, data: str) -> list:
-        """Parses a string of the form 'a/b' into a list of [a, b]."""
-        return [int(x) for x in data.split('/')]
+    def _string_to_list(self, data: str, seperator: str = '/') -> list:
+        """Converts a string by the seperator into a list."""
+        return [int(x) for x in data.split(seperator)]
 
-    def _list_to_string(self, data: list) -> str:
-        """Parses a list of the form [a, b] into a string of the form 'a/b'."""
-        return '/'.join([str(x) for x in data])
+    def _list_to_string(self, data: list, joiner: str = '/') -> str:
+        """Converts a list by the joiner into a string."""
+        return joiner.join([str(x) for x in data])
 
     def update(self, jug_a: str, jug_b: str, goal: int) -> None:
         """Updates the puzzle with the specified jugs and goal."""
         jug_a, jug_b = self._string_to_list(jug_a), self._string_to_list(jug_b)
 
         if not len(jug_a) == 2 or not len(jug_b) == 2:
-            raise ValueError('Jugs must have two values. e.g. (3, 7)')
+            raise ValueError('Jugs must have two values. e.g. 3/7 or 1/5')
         elif jug_a[1] <= 0 or jug_b[1] <= 0:
             raise ValueError('Jugs capacity must be greater than zero.')
         elif jug_a[0] > jug_a[1] or jug_b[0] > jug_b[1]:
@@ -210,24 +210,24 @@ class WaterJugPuzzle:
             jug_a_amount = 0
         elif rule == 2:  # Empty jug B
             jug_b_amount = 0
-        # elif rule == 3:  # Fill both jugs
-        #     jug_a_amount, jug_b_amount = jug_a_capacity, jug_b_capacity
-        # elif rule == 4:  # Fill jug A
-        #     jug_a_amount = jug_a_capacity
-        # elif rule == 5:  # Fill jug B
-        #     jug_b_amount = jug_b_capacity
-        elif rule == 6:  # Pour jug B into jug A
-            addition = jug_a_amount + jug_b_amount
-            addition = addition if addition <= jug_a_capacity else jug_a_capacity
-            reduction = jug_b_amount - (jug_a_capacity-jug_a_amount)
-            reduction = reduction if reduction >= 0 else 0
-            jug_a_amount, jug_b_amount = addition, reduction
-        elif rule == 7:  # Pour jug A into jug B
+        elif rule == 3:  # Fill both jugs
+            jug_a_amount, jug_b_amount = jug_a_capacity, jug_b_capacity
+        elif rule == 4:  # Fill jug A
+            jug_a_amount = jug_a_capacity
+        elif rule == 5:  # Fill jug B
+            jug_b_amount = jug_b_capacity
+        elif rule == 6:  # Pour jug A into jug B
             addition = jug_a_amount + jug_b_amount
             addition = addition if addition <= jug_b_capacity else jug_b_capacity
             reduction = jug_a_amount - (jug_b_capacity-jug_b_amount)
             reduction = reduction if reduction >= 0 else 0
             jug_a_amount, jug_b_amount = reduction, addition
+        elif rule == 7:  # Pour jug B into jug A
+            addition = jug_a_amount + jug_b_amount
+            addition = addition if addition <= jug_a_capacity else jug_a_capacity
+            reduction = jug_b_amount - (jug_a_capacity-jug_a_amount)
+            reduction = reduction if reduction >= 0 else 0
+            jug_a_amount, jug_b_amount = addition, reduction
 
         self.jug_a[0], self.jug_b[0] = jug_a_amount, jug_b_amount
         self.states_seen += f'({self._list_to_string(self.jug_a)}, {self._list_to_string(self.jug_b)})'
@@ -238,39 +238,21 @@ class WaterJugPuzzle:
         jug_a_amount, jug_a_capacity = self.jug_a
         jug_b_amount, jug_b_capacity = self.jug_b
 
-        # possible = ((jug_a_capacity-jug_a_amount) + (jug_b_capacity-jug_b_amount),
-        #             (jug_a_capacity-jug_a_amount) - (jug_b_capacity-jug_b_amount))
-        # if possible[0] != self.goal and possible[1] != self.goal:
-        #     raise ValueError('The puzzle is unsolvable, at least we can not solve it!')
-
         if self.goal == 0:
-            self.apply(0)
-        elif jug_a_amount == self.goal:
-            self.apply(2)
-        elif jug_b_amount == self.goal:
-            self.apply(1)
-        elif jug_a_amount + jug_b_amount == self.goal and jug_a_amount + jug_b_amount <= jug_a_capacity:
-            self.apply(6)
-            # self.apply(2)
-        elif jug_a_amount + jug_b_amount == self.goal and jug_a_amount + jug_b_amount <= jug_b_capacity:
-            self.apply(7)
-            # self.apply(1)
-        elif jug_a_capacity == self.goal and jug_a_amount + jug_b_amount >= self.goal:
-            self.apply(6)
-            self.apply(2)
-        elif jug_b_capacity == self.goal and jug_a_amount + jug_b_amount >= self.goal:
-            self.apply(7)
-            self.apply(1)
+            if jug_a_amount > 0 or jug_b_amount > 0:
+                self.apply(1 if jug_a_amount > 0 else 2)  # Empty the jug with the most water
+        elif jug_a_capacity == self.goal or jug_b_capacity == self.goal:
+            self.apply(4 if jug_a_capacity >= self.goal else 5)  # Fill the suitable jug
+        elif jug_a_amount + jug_b_amount == self.goal:
+            if max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Do we have a jug bigger than the goal?
+                self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
         elif jug_a_amount - (jug_b_capacity-jug_b_amount) == self.goal:
-            self.apply(7)
-            self.apply(2)
+            self.apply(6)  # Pour jug A into jug B
         elif jug_b_amount - (jug_a_capacity-jug_a_amount) == self.goal:
-            self.apply(6)
-            self.apply(1)
+            self.apply(7)  # Pour jug B into jug A
         elif max(jug_a_amount, jug_b_amount) - min(jug_a_capacity, jug_b_capacity) == self.goal:
             self.apply(1 if jug_a_capacity <= jug_b_capacity else 2)
-            self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
-            self.apply(1 if jug_a_capacity <= jug_b_capacity else 2)
+            self.apply(7 if jug_a_capacity <= jug_b_capacity else 6)
 
         return self.done()
 
@@ -282,12 +264,12 @@ if __name__ == '__main__':
     jugs = input('Enter the capacity and initial state of the jugs (e.g. 3/4, 7/8): ')
     values = list(int(x) for x in re.findall(r'\d+', jugs))
     if len(values) != 4:
-        print('Invalid input! Format must be capacity A/initial amount A, capacity B/initial amount B.')
+        print('Format must be initial amount A/capacity A, initial amount B/capacity B. e.g. 1/2 as A and 0/85 as B.')
         sys.exit(1)
 
     goal = input('What is the goal amount of water in the jugs? ')
     if not goal.isnumeric():
-        print('Invalid input! Goal must be greater or equal to zero.')
+        print('Goal must be greater or equal to zero. e.g. 0, 1, 2, etc.')
         sys.exit(1)
 
     try:
@@ -296,5 +278,5 @@ if __name__ == '__main__':
         print(e)
         sys.exit(1)
 
-    print(f'\nIs the puzzle solved? {"Yes" if water_juz_puzzle.solve() else "No"}')
+    print(f'\nIs the puzzle solved?! {"Yeah, of course" if water_juz_puzzle.solve() else "No, sorry dude"}...')
     print(f'Solution: {" -> ".join(list(water_juz_puzzle.states()))}')

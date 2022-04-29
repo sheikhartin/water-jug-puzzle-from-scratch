@@ -43,8 +43,7 @@ class MainWindowUI(QMainWindow):
         """Updates the puzzle with the current values of the jugs."""
         self.jug_a_amount.setMaximum(self.jug_a_capacity.value())
         self.jug_b_amount.setMaximum(self.jug_b_capacity.value())
-        self.goal_amount.setMaximum(min(self.jug_a_amount.value() + self.jug_b_amount.value(),
-                                        max(self.jug_a_capacity.value(), self.jug_b_capacity.value())))
+        self.goal_amount.setMaximum(max(self.jug_a_capacity.value(), self.jug_b_capacity.value()))
 
         self.water_jug_puzzle.update(
             f'{self.jug_a_amount.value()}/{self.jug_a_capacity.value()}',
@@ -69,9 +68,15 @@ class MainWindowUI(QMainWindow):
             self.water_jug_puzzle.apply(1)
         elif index == 3:  # Empty B
             self.water_jug_puzzle.apply(2)
-        elif index == 4:  # Pour B into A
+        elif index == 4:  # Fill both jugs
+            self.water_jug_puzzle.apply(3)
+        elif index == 5:  # Fill jug A
+            self.water_jug_puzzle.apply(4)
+        elif index == 6:  # Fill jug B
+            self.water_jug_puzzle.apply(5)
+        elif index == 7:  # Pour A into B
             self.water_jug_puzzle.apply(6)
-        elif index == 5:  # Pour A into B
+        elif index == 8:  # Pour B into A
             self.water_jug_puzzle.apply(7)
 
         self.show_puzzle_states()

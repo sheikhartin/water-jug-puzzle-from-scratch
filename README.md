@@ -26,7 +26,9 @@ Let's solve a few examples to understand it better, but before that we have to r
 \
 ![Situation no. 3:](screenshots/situation-no3.png)\
 \
-![Situation no. 4:](screenshots/situation-no4.png)
+![Situation no. 4:](screenshots/situation-no4.png)\
+\
+![Situation no. 5:](screenshots/situation-no5.png)
 
 ### Screenshots
 

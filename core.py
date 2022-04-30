@@ -184,7 +184,7 @@ class WaterJugPuzzle:
         elif jug_a[0] > jug_a[1] or jug_b[0] > jug_b[1]:
             raise ValueError('Jugs must have a capacity greater than the current amount.')
         elif jug_a[1] < goal and jug_b[1] < goal:
-            raise ValueError('The goal must be less than or equal to the capacity.')
+            raise ValueError('The goal must be less than or equal to the biggest capacity.')
 
         self.jug_a = jug_a
         self.jug_b = jug_b
@@ -228,6 +228,8 @@ class WaterJugPuzzle:
             reduction = jug_b_amount - (jug_a_capacity-jug_a_amount)
             reduction = reduction if reduction >= 0 else 0
             jug_a_amount, jug_b_amount = addition, reduction
+        else:
+            raise ValueError('Rule must be between 0 and 7.')
 
         self.jug_a[0], self.jug_b[0] = jug_a_amount, jug_b_amount
         self.states_seen += f'({self._list_to_string(self.jug_a)}, {self._list_to_string(self.jug_b)})'
@@ -243,14 +245,17 @@ class WaterJugPuzzle:
                 self.apply(1 if jug_a_amount > 0 else 2)  # Empty the jug with the most water
         elif jug_a_capacity == self.goal or jug_b_capacity == self.goal:
             self.apply(4 if jug_a_capacity >= self.goal else 5)  # Fill the suitable jug
-        elif jug_a_amount + jug_b_amount == self.goal:
-            if max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Do we have a jug bigger than the goal?
-                self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
+        elif jug_a_amount + jug_b_amount == self.goal and max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Do we have a jug bigger than the goal?
+            self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
         elif jug_a_amount - (jug_b_capacity-jug_b_amount) == self.goal:
             self.apply(6)  # Pour jug A into jug B
         elif jug_b_amount - (jug_a_capacity-jug_a_amount) == self.goal:
             self.apply(7)  # Pour jug B into jug A
         elif max(jug_a_amount, jug_b_amount) - min(jug_a_capacity, jug_b_capacity) == self.goal:
+            self.apply(1 if jug_a_capacity <= jug_b_capacity else 2)  # Empty the smaller jug
+            self.apply(7 if jug_a_capacity <= jug_b_capacity else 6)  # Pour from the bigger jug
+        elif max(jug_a_capacity, jug_b_capacity) - min(jug_a_capacity, jug_b_capacity) == self.goal:
+            self.apply(3)  # Fill both jugs and then act like the above
             self.apply(1 if jug_a_capacity <= jug_b_capacity else 2)
             self.apply(7 if jug_a_capacity <= jug_b_capacity else 6)
 
@@ -279,4 +284,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     print(f'\nIs the puzzle solved?! {"Yeah, of course" if water_juz_puzzle.solve() else "No, sorry dude"}...')
-    print(f'Solution: {" -> ".join(list(water_juz_puzzle.states()))}')
+    print(f'Solution: {" -> ".join(water_juz_puzzle.states())}')

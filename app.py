@@ -3,8 +3,14 @@
 import sys
 from pathlib import Path
 
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QSpinBox, QComboBox,
-                             QPushButton, QTextBrowser)
+from PyQt5.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QSpinBox,
+    QComboBox,
+    QPushButton,
+    QTextBrowser,
+)
 from PyQt5.uic import loadUi
 
 from core import WaterJugPuzzle

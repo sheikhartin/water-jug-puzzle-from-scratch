@@ -142,6 +142,16 @@ class LinkedList:
         self.size = 0
 
 
+def _string_to_int_list(data: str, seperator: str = '/') -> list:
+    """Converts a string by the seperator into an integer list."""
+    return [int(x) for x in data.split(seperator)]
+
+
+def _list_to_string(data: list, joiner: str = '/') -> str:
+    """Converts a list by the joiner into a string."""
+    return joiner.join([str(x) for x in data])
+
+
 class WaterJugPuzzle:
     """Water jug puzzle implementation.
 
@@ -156,7 +166,7 @@ class WaterJugPuzzle:
         self.update(jug_a, jug_b, goal)
 
     def __str__(self) -> str:
-        return f'WaterJugPuzzle(jug_a={self._list_to_string(self.jug_a)}, jug_b={self._list_to_string(self.jug_b)}, goal={self.goal}, states_seen={self.states_seen})'
+        return f'WaterJugPuzzle(jug_a={_list_to_string(self.jug_a)}, jug_b={_list_to_string(self.jug_b)}, goal={self.goal}, states_seen={self.states_seen})'
 
     def __repr__(self) -> str:
         return str(self)
@@ -165,17 +175,9 @@ class WaterJugPuzzle:
         return (self.jug_a == other.jug_a and self.jug_b == other.jug_b and
                 self.goal == other.goal)
 
-    def _string_to_list(self, data: str, seperator: str = '/') -> list:
-        """Converts a string by the seperator into a list."""
-        return [int(x) for x in data.split(seperator)]
-
-    def _list_to_string(self, data: list, joiner: str = '/') -> str:
-        """Converts a list by the joiner into a string."""
-        return joiner.join([str(x) for x in data])
-
     def update(self, jug_a: str, jug_b: str, goal: int) -> None:
         """Updates the puzzle with the specified jugs and goal."""
-        jug_a, jug_b = self._string_to_list(jug_a), self._string_to_list(jug_b)
+        jug_a, jug_b = _string_to_int_list(jug_a), _string_to_int_list(jug_b)
 
         if not len(jug_a) == 2 or not len(jug_b) == 2:
             raise ValueError('Jugs must have two values. e.g. 3/7 or 1/5')
@@ -245,7 +247,7 @@ class WaterJugPuzzle:
                 self.apply(1 if jug_a_amount > 0 else 2)  # Empty the jug with the most water
         elif jug_a_capacity == self.goal or jug_b_capacity == self.goal:
             self.apply(4 if jug_a_capacity >= self.goal else 5)  # Fill the suitable jug
-        elif jug_a_amount + jug_b_amount == self.goal and max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Do we have a jug bigger than the goal?
+        elif jug_a_amount + jug_b_amount == self.goal and max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Checks for a suitable jug
             self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
         elif jug_a_amount - (jug_b_capacity-jug_b_amount) == self.goal:
             self.apply(6)  # Pour jug A into jug B

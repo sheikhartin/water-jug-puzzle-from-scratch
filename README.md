@@ -1,7 +1,9 @@
 ## Water Jug Puzzle From Scratch
 
 ![GitHub repo status](https://img.shields.io/badge/status-active-green?style=flat)
+![GitHub license](https://img.shields.io/github/license/sheikhartin/water-jug-puzzle-from-scratch)
 ![GitHub contributors](https://img.shields.io/github/contributors/sheikhartin/water-jug-puzzle-from-scratch)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/sheikhartin/water-jug-puzzle-from-scratch)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sheikhartin/water-jug-puzzle-from-scratch)
 
 Water jug is a classic and also interesting puzzle to solve. You are given some number of jugs with a capacity and a initial state of water in each jug. Now you should do some operations to make the water in one jug to be equal to the goal amount.

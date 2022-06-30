@@ -7,7 +7,7 @@ class Node:
     """Node for a singly linked list.
 
     Attributes:
-        data: The data stored in the node.
+        data: The value stored in the node.
         next: The next node in the list.
     """
 
@@ -142,12 +142,12 @@ class LinkedList:
         self.size = 0
 
 
-def _string_to_int_list(data: str, seperator: str = '/') -> list:
+def _string_to_int_list(data: str, seperator: Optional[str] = '/') -> list:
     """Converts a string by the seperator into an integer list."""
     return [int(x) for x in data.split(seperator)]
 
 
-def _list_to_string(data: list, joiner: str = '/') -> str:
+def _list_to_string(data: list, joiner: Optional[str] = '/') -> str:
     """Converts a list by the joiner into a string."""
     return joiner.join([str(x) for x in data])
 
@@ -172,8 +172,8 @@ class WaterJugPuzzle:
         return str(self)
 
     def __eq__(self, other: Any) -> bool:
-        return (self.jug_a == other.jug_a and self.jug_b == other.jug_b and
-                self.goal == other.goal)
+        return self.jug_a == other.jug_a and self.jug_b == other.jug_b and \
+               self.goal == other.goal
 
     def update(self, jug_a: str, jug_b: str, goal: int) -> None:
         """Updates the puzzle with the specified jugs and goal."""
@@ -191,7 +191,7 @@ class WaterJugPuzzle:
         self.jug_a = jug_a
         self.jug_b = jug_b
         self.goal = goal
-        self.states_seen = LinkedList(f'({self._list_to_string(self.jug_a)}, {self._list_to_string(self.jug_b)})')
+        self.states_seen = LinkedList(f'({_list_to_string(self.jug_a)}, {_list_to_string(self.jug_b)})')
 
     def done(self) -> bool:
         """Returns true if the puzzle is solved, false otherwise."""
@@ -234,7 +234,7 @@ class WaterJugPuzzle:
             raise ValueError('Rule must be between 0 and 7.')
 
         self.jug_a[0], self.jug_b[0] = jug_a_amount, jug_b_amount
-        self.states_seen += f'({self._list_to_string(self.jug_a)}, {self._list_to_string(self.jug_b)})'
+        self.states_seen += f'({_list_to_string(self.jug_a)}, {_list_to_string(self.jug_b)})'
         return self.done()
 
     def solve(self) -> bool:

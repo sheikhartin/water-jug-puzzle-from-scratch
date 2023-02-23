@@ -179,7 +179,7 @@ class WaterJugPuzzle:
         """Updates the puzzle with the specified jugs and goal."""
         jug_a, jug_b = _string_to_int_list(jug_a), _string_to_int_list(jug_b)
 
-        if not len(jug_a) == 2 or not len(jug_b) == 2:
+        if len(jug_a) != 2 or len(jug_b) != 2:
             raise ValueError('Jugs must have two values. e.g. 3/7 or 1/5')
         elif jug_a[1] <= 0 or jug_b[1] <= 0:
             raise ValueError('Jugs capacity must be greater than zero.')
@@ -206,29 +206,29 @@ class WaterJugPuzzle:
         jug_a_amount, jug_a_capacity = self.jug_a
         jug_b_amount, jug_b_capacity = self.jug_b
 
-        if rule == 0:  # Empty both jugs
+        if rule == 0:
             jug_a_amount, jug_b_amount = 0, 0
-        elif rule == 1:  # Empty jug A
+        elif rule == 1:
             jug_a_amount = 0
-        elif rule == 2:  # Empty jug B
+        elif rule == 2:
             jug_b_amount = 0
-        elif rule == 3:  # Fill both jugs
+        elif rule == 3:
             jug_a_amount, jug_b_amount = jug_a_capacity, jug_b_capacity
-        elif rule == 4:  # Fill jug A
+        elif rule == 4:
             jug_a_amount = jug_a_capacity
-        elif rule == 5:  # Fill jug B
+        elif rule == 5:
             jug_b_amount = jug_b_capacity
-        elif rule == 6:  # Pour jug A into jug B
+        elif rule == 6:
             addition = jug_a_amount + jug_b_amount
             addition = addition if addition <= jug_b_capacity else jug_b_capacity
             reduction = jug_a_amount - (jug_b_capacity-jug_b_amount)
-            reduction = reduction if reduction >= 0 else 0
+            reduction = max(reduction, 0)
             jug_a_amount, jug_b_amount = reduction, addition
-        elif rule == 7:  # Pour jug B into jug A
+        elif rule == 7:
             addition = jug_a_amount + jug_b_amount
             addition = addition if addition <= jug_a_capacity else jug_a_capacity
             reduction = jug_b_amount - (jug_a_capacity-jug_a_amount)
-            reduction = reduction if reduction >= 0 else 0
+            reduction = max(reduction, 0)
             jug_a_amount, jug_b_amount = addition, reduction
         else:
             raise ValueError('Rule must be between 0 and 7.')
@@ -269,7 +269,7 @@ if __name__ == '__main__':
     import sys
 
     jugs = input('Enter the capacity and initial state of the jugs (e.g. 3/4, 7/8): ')
-    values = list(int(x) for x in re.findall(r'\d+', jugs))
+    values = [int(x) for x in re.findall(r'\d+', jugs)]
     if len(values) != 4:
         print('Format must be initial amount A/capacity A, initial amount B/capacity B. e.g. 1/2 as A and 0/85 as B.')
         sys.exit(1)

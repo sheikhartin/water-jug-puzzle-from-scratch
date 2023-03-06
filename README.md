@@ -41,7 +41,6 @@ Let's solve a few examples to understand it better, but before that we have to r
 ![Solved puzzle with default values](images/solved-puzzle.png)
 ![Another solved puzzle with huge jugs](images/solved-puzzle-with-huge-jugs.png)
 ![Manually solved puzzle](images/manually-solved-puzzle.png)
-![Manually unsolved puzzle](images/manually-unsolved-puzzle.png)
 ![And a unsolved puzzle](images/unsolved-puzzle.png)
 
 ### Usage

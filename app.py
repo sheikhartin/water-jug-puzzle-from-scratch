@@ -64,7 +64,7 @@ class MainWindowUI(QMainWindow):
         if self.water_jug_puzzle.done():
             self.states_browser.append('\nPuzzle solved!')
         else:
-            self.states_browser.append('\nNothing has happened yet...')
+            self.states_browser.append('\nThe current situation does not match the goal...')
 
     def apply_state(self, index: int) -> None:
         """Applies the selected state to the puzzle."""

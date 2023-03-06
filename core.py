@@ -179,7 +179,7 @@ class WaterJugPuzzle:
         """Updates the puzzle with the specified jugs and goal."""
         jug_a, jug_b = _string_to_int_list(jug_a), _string_to_int_list(jug_b)
 
-        if not len(jug_a) == 2 or not len(jug_b) == 2:
+        if len(jug_a) != 2 or len(jug_b) != 2:
             raise ValueError('Jugs must have two values. e.g. 3/7 or 1/5')
         elif jug_a[1] <= 0 or jug_b[1] <= 0:
             raise ValueError('Jugs capacity must be greater than zero.')
@@ -222,13 +222,13 @@ class WaterJugPuzzle:
             addition = jug_a_amount + jug_b_amount
             addition = addition if addition <= jug_b_capacity else jug_b_capacity
             reduction = jug_a_amount - (jug_b_capacity-jug_b_amount)
-            reduction = reduction if reduction >= 0 else 0
+            reduction = max(0, reduction)
             jug_a_amount, jug_b_amount = reduction, addition
         elif rule == 7:  # Pour jug B into jug A
             addition = jug_a_amount + jug_b_amount
             addition = addition if addition <= jug_a_capacity else jug_a_capacity
             reduction = jug_b_amount - (jug_a_capacity-jug_a_amount)
-            reduction = reduction if reduction >= 0 else 0
+            reduction = max(0, reduction)
             jug_a_amount, jug_b_amount = addition, reduction
         else:
             raise ValueError('Rule must be between 0 and 7.')
@@ -246,7 +246,7 @@ class WaterJugPuzzle:
             if jug_a_amount > 0 or jug_b_amount > 0:
                 self.apply(1 if jug_a_amount > 0 else 2)  # Empty the jug with the most water
         elif jug_a_capacity == self.goal or jug_b_capacity == self.goal:
-            self.apply(4 if jug_a_capacity >= self.goal else 5)  # Fill the suitable jug
+            self.apply(4 if jug_a_capacity == self.goal else 5)  # Fill the suitable jug
         elif jug_a_amount + jug_b_amount == self.goal and max(jug_a_capacity, jug_b_capacity) >= self.goal:  # Checks for a suitable jug
             self.apply(6 if jug_a_capacity <= jug_b_capacity else 7)
         elif jug_a_amount - (jug_b_capacity-jug_b_amount) == self.goal:

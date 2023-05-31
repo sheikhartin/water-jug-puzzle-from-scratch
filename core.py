@@ -142,7 +142,7 @@ class LinkedList:
         self.size = 0
 
 
-def _string_to_int_list(data: str, seperator: Optional[str] = '/') -> list:
+def _string_to_integer_list(data: str, seperator: Optional[str] = '/') -> list:
     """Converts a string by the seperator into an integer list."""
     return [int(x) for x in data.split(seperator)]
 
@@ -177,7 +177,7 @@ class WaterJugPuzzle:
 
     def update(self, jug_a: str, jug_b: str, goal: int) -> None:
         """Updates the puzzle with the specified jugs and goal."""
-        jug_a, jug_b = _string_to_int_list(jug_a), _string_to_int_list(jug_b)
+        jug_a, jug_b = _string_to_integer_list(jug_a), _string_to_integer_list(jug_b)
 
         if len(jug_a) != 2 or len(jug_b) != 2:
             raise ValueError('Jugs must have two values. e.g. 3/7 or 1/5')
